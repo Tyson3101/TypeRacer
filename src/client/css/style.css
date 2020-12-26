@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+body {
+  background-color: cadetblue;
+}
+
+.navBar {
+  color: rgb(216, 165, 165);
+  background-color: rebeccapurple;
+  padding: 24px;
+}
+
+.navBarItems,
+.navBarItems li {
+  list-style: none;
+  display: inline;
+  margin-right: 20px;
+  margin-left: 20px;
+  font-size: 3rem;
+}
+
+.navBarItems a {
+  margin-left: 4rem;
+  padding: 6px;
+  text-decoration: none;
+  color: cadetblue;
+  font-size: 2rem;
+}
+
+.start {
+  height: 20vh;
+  width: 50vw;
+  margin-left: 25vw;
+  font-size: 3vh;
+}
