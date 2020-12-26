@@ -21,17 +21,17 @@ body {
 .navBarItems li {
   list-style: none;
   display: inline;
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
   font-size: 3rem;
 }
 
 .navBarItems a {
-  margin-left: 4rem;
+  margin-left: 4vw;
   padding: 6px;
   text-decoration: none;
   color: cadetblue;
-  font-size: 2rem;
+  font-size: 1.4rem;
 }
 
 .start {
