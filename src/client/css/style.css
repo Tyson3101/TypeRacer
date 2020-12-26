@@ -15,18 +15,27 @@ body {
   color: rgb(216, 165, 165);
   background-color: rebeccapurple;
   padding: 24px;
+  margin-bottom: 5px;
 }
 
 .navBarItems,
-.navBarItems li {
+.navBarItems ul li {
   list-style: none;
-  display: inline;
   margin-right: 10px;
   margin-left: 10px;
   font-size: 3rem;
 }
 
-.navBarItems a {
+.navBarItems ul {
+  float: right;
+  margin-right: 20px;
+}
+
+.navBarItems li {
+  display: inline;
+}
+
+.navBarItems li a {
   margin-left: 4vw;
   padding: 6px;
   text-decoration: none;
