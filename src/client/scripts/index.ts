@@ -33,7 +33,7 @@ async function getRandomWikiArticle(): Promise<WikiAriticle> {
     const data: string[][] = await fetch(searchURL + word).then((res) =>
       res.json()
     );
-    if (!data[2].length && !data[3].length) {
+    if (!data[2].length || !data[3].length) {
       continue;
     } else {
       sentence = data[3][Math.floor(Math.random() * data[3].length)];
