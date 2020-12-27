@@ -54,7 +54,7 @@ async function getRandomWikiArticle(): Promise<WikiAriticle> {
 }
 
 function getRandomSentence(wikiLink: string | null): Promise<WikiAriticle> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _reject) => {
     if (wikiLink == null) resolve(giveMadeWord());
     else {
       const wiki = wikiLink.trim().split("https://en.wikipedia.org/wiki/")[1];
