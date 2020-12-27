@@ -1,8 +1,3 @@
-/*const madeRandomWords = [
-  "Melbourne is the coastal capital of the southeastern Australian state of Victoria. At the city's centre is the modern Federation Square development, with plazas, bars, and restaurants by the Yarra River. In the Southbank area, the Melbourne Arts Precinct is the site of Arts Centre Melbourne – a performing arts complex – and the National Gallery of Victoria, with Australian and indigenous art.",
-];
-*/
-
 export interface WikiAriticle {
   title: string;
   revision: string;
@@ -56,6 +51,40 @@ const madeRandomWords: WikiAriticle[] = [
     title: "Melbourne",
     revision:
       "Melbourne is the coastal capital of the southeastern Australian state of Victoria. At the city's centre is the modern Federation Square development, with plazas, bars, and restaurants by the Yarra River. In the Southbank area, the Melbourne Arts Precinct is the site of Arts Centre Melbourne – a performing arts complex – and the National Gallery of Victoria, with Australian and indigenous art.",
+  },
+  {
+    title: "JavaScript",
+    revision:
+      "JavaScript, often abbreviated as JS, is a programming language that conforms to the ECMAScript specification. JavaScript is high-level, often just-in-time compiled, and multi-paradigm. It has curly-bracket syntax, dynamic typing, prototype-based object-orientation, and first-class functions.",
+  },
+  {
+    title: "HTML",
+    revision:
+      "Hypertext Markup Language is the standard markup language for documents designed to be displayed in a web browser. It can be assisted by technologies such as Cascading Style Sheets and scripting languages such as JavaScript",
+  },
+  {
+    title: "CSS",
+    revision:
+      "Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language such as HTML. CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript.",
+  },
+  {
+    title: "Python",
+    revision:
+      "Python is an interpreted, high-level and general-purpose programming language. Python's design philosophy emphasizes code readability with its notable use of significant whitespace.",
+  },
+  {
+    title: "YouTube",
+    revision:
+      "YouTube is an American online video-sharing platform headquartered in San Bruno, California. Three former PayPal employees—Chad Hurley, Steve Chen, and Jawed Karim—created the service in February 2005. Google bought the site in November 2006 for US$1.65 billion; YouTube now operates as one of Google's subsidiaries.",
+  },
+  {
+    title: "Vevo LLC",
+    revision: `VEVO LLC distributes music videos and entertainment services. The Company, through its proprietary website "VEVO.com", offers music videos, behind the scenes footage, live performances and interviews with artists. VEVO LLC is a subscription based service that is accessible globally by customers.`,
+  },
+  {
+    title: "PayPal",
+    revision:
+      "PayPal Holdings, Inc. is an American company operating an online payments system in majority of countries that supports online money transfers and serves as an electronic alternative to traditional paper methods like checks and money orders",
   },
 ];
 export default madeRandomWords;
