@@ -1,17 +1,20 @@
-export interface WikiAriticle {
-  title: string;
-  revision: string;
-}
+import { WikiAriticle } from "./interfaces";
 
-export interface Socket {
-  connected: boolean;
-  disconnected: boolean;
-  on: (EventName: string, CallBack: Function) => void;
-  off: (EventName: string, CallBack: Function) => void;
-  emit: (EventName: string, ...args: any) => void;
-}
+const searchURL =
+  "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=";
+const contentURL =
+  "https://en.wikipedia.org/w/api.php?action=query&&prop=extracts&exintro&explaintext&format=json&origin=*&titles=";
 
-const madeRandomWords: WikiAriticle[] = [
+const LOCALSTORAGE_PREVWORDS = "TYPERACER_GAME_PREVWORDS";
+let prevwords: WikiAriticle[] = (() => {
+  if (!window.localStorage.getItem(LOCALSTORAGE_PREVWORDS))
+    window.localStorage.setItem(LOCALSTORAGE_PREVWORDS, JSON.stringify([]));
+  return JSON.parse(
+    window.localStorage.getItem(LOCALSTORAGE_PREVWORDS) as string
+  );
+})();
+
+export const madeRandomWords: WikiAriticle[] = [
   {
     title: "Steam",
     revision:
@@ -87,4 +90,99 @@ const madeRandomWords: WikiAriticle[] = [
       "PayPal Holdings, Inc. is an American company operating an online payments system in majority of countries that supports online money transfers and serves as an electronic alternative to traditional paper methods like checks and money orders",
   },
 ];
-export default madeRandomWords;
+export default async function getRandomWikiArticle(): Promise<WikiAriticle> {
+  const randomWords: string[] = await fetch(
+    "https://random-word-api.herokuapp.com/word?number=30&swear=0"
+  ).then((res) => res.json() as Promise<string[]>);
+
+  let sentence: string | undefined;
+  for await (let word of randomWords) {
+    const data: string[][] = await fetch(searchURL + word).then((res) =>
+      res.json()
+    );
+    if (!data[2].length || !data[3].length) {
+      continue;
+    } else {
+      sentence = data[3][Math.floor(Math.random() * data[3].length)];
+      break;
+    }
+  }
+
+  return getRandomSentence(sentence ?? null);
+}
+
+export function getRandomSentence(
+  wikiLink: string | null
+): Promise<WikiAriticle> {
+  return new Promise((resolve, _reject) => {
+    if (wikiLink == null) resolve(giveMadeWord());
+    else {
+      const wiki = wikiLink.trim().split("https://en.wikipedia.org/wiki/")[1];
+      fetch(contentURL + wiki)
+        .then((res) => res.json())
+        .then((data) => {
+          const pageNumber = Object.keys(data.query.pages)[0];
+          const wikiInfo: { title: string; extract: string } =
+            data.query.pages[pageNumber];
+          let revision = (!wikiInfo.extract
+            .split(".")
+            .slice(0, 2)
+            .map((str) => str.trim().normalize())
+            .join(". ")
+            .endsWith(".")
+            ? wikiInfo.extract
+                .split(".")
+                .slice(0, 2)
+                .map((str) => str.trim().normalize())
+                .join(". ") + "."
+            : wikiInfo.extract
+                .split(".")
+                .slice(0, 2)
+                .map((str) => str.trim().normalize())
+                .join(". ")
+                .slice(0, -1)
+          )
+            .replace(/[^\x00-\x7F]/g, "_")
+            .trim();
+          let title = wikiInfo.title;
+          if (!revision || revision === ".") {
+            resolve(giveMadeWord());
+          } else resolve({ revision, title });
+        });
+    }
+  });
+}
+
+export function giveMadeWord(): WikiAriticle {
+  const randomWords = madeRandomWords;
+  let randomWord: WikiAriticle | undefined;
+  if (!prevwords[0]) {
+    let word = randomWords[Math.floor(Math.random() * randomWords.length)];
+    prevwords.push(word);
+    window.localStorage.setItem(
+      LOCALSTORAGE_PREVWORDS,
+      JSON.stringify(prevwords)
+    );
+    prevwords = JSON.parse(
+      window.localStorage.getItem(LOCALSTORAGE_PREVWORDS)!
+    );
+    return word;
+  }
+  if (prevwords.length === randomWords.length) prevwords.shift();
+  if (
+    randomWords.some(
+      ({ title }) => !prevwords.map((s) => s.title).includes(title)
+    )
+  ) {
+    randomWord = randomWords.find(
+      ({ title }) => !prevwords.map((s) => s.title).includes(title)
+    );
+    randomWord && prevwords.push(randomWord);
+  }
+  window.localStorage.setItem(
+    LOCALSTORAGE_PREVWORDS,
+    JSON.stringify(prevwords)
+  );
+  prevwords = JSON.parse(window.localStorage.getItem(LOCALSTORAGE_PREVWORDS)!);
+  return randomWord as WikiAriticle;
+}
