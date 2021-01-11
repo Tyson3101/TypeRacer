@@ -47,5 +47,7 @@ body {
   height: 20vh;
   width: 50vw;
   margin-left: 25vw;
-  font-size: 3vh;
+  font-size: 150%;
+  background-color: aliceblue;
+  overflow: visible;
 }
